@@ -1,13 +1,13 @@
 class FanDuel_Scoring(object):
-    pass
+    p = 1
+    r = 1.2
+    a = 1.5
+    s = 3
+    b = 3
+    t = -1
+    dd = 1.5
+    td = 3
 
-#point = 1
-#rebound = 1.2
-#assist = 1.5
-#steal = 3
-#block = 3
-#turnover = -1
-#double-double = 1.5
-#triple-double = 3
+
 
 
