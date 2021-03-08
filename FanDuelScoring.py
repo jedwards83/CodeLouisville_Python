@@ -8,6 +8,3 @@ class FanDuel_Scoring(object):
     dd = 1.5
     td = 3
 
-
-
-
