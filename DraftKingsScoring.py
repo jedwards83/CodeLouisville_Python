@@ -5,9 +5,7 @@ class DraftKings_Scoring(object):
     a = 1.5
     s = 2
     b = 2
-    t -0.5
+    t = -0.5
     dd = 1.5
     td = 3
-
-
 
