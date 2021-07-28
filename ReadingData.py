@@ -4,12 +4,9 @@ import pandas as pd
 
 neededCol_List = ["Player", "Pos", "Tm", "MP", "FGpct","3P","FTpct","TRB","AST","STL","BLK","TOV", "PTS"]
 playerStats = pd.read_csv("2019_20_NBAStats.csv", usecols=neededCol_List)
-#for col in playerStats.columns:
-    #print(col)
 
-#nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
-#old_player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
 
+#Methods below for Sort mechanics
 def nba_TeamSearch():
     pd.set_option('display.max_columns', None)
     pd.set_option('display.max_rows', None)
@@ -68,7 +65,7 @@ def AST_sort():
     pd.set_option('display.max_columns', None)
     pd.set_option('display.max_rows', None)
     pd.set_option('display.latex.longtable', True)
-    Astall = pd.DataFrame(playerStats.sort_values('Ast',ascending=False,ignore_index=True))
+    Astall = pd.DataFrame(playerStats.sort_values('AST',ascending=False,ignore_index=True))
     AstFilter = Astall[Astall['MP'] > 15]
     AstSort = pd.DataFrame.head(AstFilter, 100)
     print(AstSort)
@@ -132,7 +129,7 @@ def main_Menu():
     elif main_Menu.Selection == '5':
         NBAPlayer_sort()
     elif main_Menu.Selection == '6':
-        NBAPlayer_sort()
+        sys.exit("Thank you for choosing NBA Player Selector")
 
 
 
@@ -173,7 +170,7 @@ def searchCategory_Menu():
             BLK_sort()
     elif searchCategory_Menu.Selection == '8':
             TOV_sort()
-    elif SsearchCategory_Menu.Selection == '9':
+    elif searchCategory_Menu.Selection == '9':
             PTS_sort()
     elif searchCategory_Menu.Selection == '10':
             main_Menu()
@@ -182,8 +179,6 @@ def searchTeam_Menu():
     print("Please Choose the team abbreviations from the list below:")
     nba_TeamSearch()
     input()
-
-
 
 
 #print(playerStats.drop_duplicates["Tm"])
