@@ -11,14 +11,14 @@ playerStats = pd.read_csv("2019_20_NBAStats.csv", usecols=neededCol_List)
 sumofStats = playerStats["3P"] + playerStats["TRB"] + playerStats["AST"] + playerStats["STL"] + playerStats["BLK"] - playerStats["TOV"] + playerStats["PTS"]
 playerStats["Score"] = sumofStats
 
-
+#Sets Panda DataFrame Column Options
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 pd.set_option('display.latex.longtable', True)
 pd.options.display.width = 0
 
 
-
+#loop designed to allow user to go back to main menu or leave the application.
 def loop_Menu():
     print('------------------------------------------------------')
     loopmenu = input("Where would you like to go now? 1 for Main Menu, or 2 to exit:  ")
@@ -32,14 +32,14 @@ def loop_Menu():
        print("invalid entry try again")
        loop_Menu()
 
-
+#Sorts players for the "All Player Sort" Command. Additional limit based on a minimum of 15 minutes played on average per game.
 def Player_sort():
     Playerall = pd.DataFrame(playerStats.sort_values('Player',ascending=True))
     PlayerFilter = Playerall[Playerall['MP'] > 15].reset_index(drop=True)
     print(PlayerFilter)
     loop_Menu()
 
-
+#Allows Sorting by Category and limits player Selection to top 100 players. Additional limit based on a minimum of 15 minutes played on average per game.
 def name_sort(sort_column):
     nameall = pd.DataFrame(playerStats.sort_values(sort_column,ascending=False,ignore_index=True))
     namefilter = nameall[nameall['MP'] > 15].reset_index(drop=True)
@@ -47,14 +47,13 @@ def name_sort(sort_column):
     print(namesort)
     loop_Menu()
 
-    
+#Main Menu to Direct
 def main_Menu():
         print('------------------------------------------------------')
         print("Welcome to The NBA Draft Manager!") 
         print("Please select an option from below to access our data:")
         print("------------------------------------------------------")
         print("1: View All Players")
-        #print("2: View A Specific Teams Players")
         print("2: View All Players Sorted by Category")
         print("3: Exit")
         print('------------------------------------------------------')
@@ -62,8 +61,6 @@ def main_Menu():
         print('------------------------------------------------------')
         if main_Menu.Selection == '1':
             Player_sort()
-        #elif main_Menu.Selection == '2':
-        #    team_sort()
         elif main_Menu.Selection == '2':
             searchCategory_Menu()
         elif main_Menu.Selection == '3':
@@ -78,7 +75,7 @@ def main_Menu():
            main_Menu()
 
 
-
+#Menu used to Sort Categories
 def searchCategory_Menu():
     print("What Category would you like to Sort By?")
     print("1. FieldGoal pct")
@@ -115,13 +112,11 @@ def searchCategory_Menu():
     elif searchCategory_Menu.Selection == '10':
             main_Menu()  
 
-
+#Calls Main_Menu function to run application.
 main_Menu()
 
 
 
-
-#main_Menu()
 
 #Extra Features for TeamSearch to come later:
 #def NBAteamplayer_sort(team_sorted):
@@ -177,3 +172,6 @@ main_Menu()
     #    main_Menu()
     #team_players(team)
 #print(playerStats.drop_duplicates["Tm"])
+        #print("2: View A Specific Teams Players")
+                #elif main_Menu.Selection == '2':
+        #    team_sort()
