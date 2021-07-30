@@ -1,145 +1,83 @@
 import sys
 import csv
 import pandas as pd
+import pprint
 
+#Create List and populate with several values
 neededCol_List = ["Player", "Pos", "Tm", "MP", "FGpct","3P","FTpct","TRB","AST","STL","BLK","TOV", "PTS"]
+#Read data from an external file
 playerStats = pd.read_csv("2019_20_NBAStats.csv", usecols=neededCol_List)
+#Used pandas to add and subtract different columns to create a new column added into the list.
+sumofStats = playerStats["3P"] + playerStats["TRB"] + playerStats["AST"] + playerStats["STL"] + playerStats["BLK"] - playerStats["TOV"] + playerStats["PTS"]
+playerStats["Score"] = sumofStats
 
 
-#Methods below for Sort mechanics
-def nba_TeamSearch():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
-    player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
-    print(player_Team.sort_values('Tm',ascending=True,))
-
-def NBAPlayer_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    Playerall = pd.DataFrame(playerStats.sort_values('Player',ascending=False,ignore_index=True))
-    PlayerFilter = Playerall[Playerall['MP'] > 15]
-    PlayerSort = pd.DataFrame.head(PlayerFilter, 100)
-    print(PlayerSort)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.latex.longtable', True)
+pd.options.display.width = 0
 
 
-def FGpct_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    FGAall = pd.DataFrame(playerStats.sort_values('FGpct',ascending=False,ignore_index=True))
-    FGFilter = FGAall[FGAall['MP'] > 15]
-    FGSort = pd.DataFrame.head(FGFilter, 100)
-    print(FGSort)
 
-def ThreePointer_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    ThreePAll = pd.DataFrame(playerStats.sort_values('3P',ascending=False,ignore_index=True))
-    ThreePFilter = ThreePAll[ThreePAll['MP'] > 15]
-    ThreePSort = pd.DataFrame.head(ThreePFilter, 100)
-    print(ThreePSort)
+def loop_Menu():
+    print('------------------------------------------------------')
+    loopmenu = input("Where would you like to go now? 1 for Main Menu, or 2 to exit:  ")
+    if loopmenu == '1':
+        main_Menu()
+    elif loopmenu == '2':
+        print('------------------------------------------------------')
+        sys.exit("Thank you for choosing the NBA Manager!")
+        print('------------------------------------------------------')
+    else:
+       print("invalid entry try again")
+       loop_Menu()
 
-def FTpct_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    FTAall = pd.DataFrame(playerStats.sort_values('FTpct',ascending=False,ignore_index=True))
-    FTFilter = FTAall[FTAall['MP'] > 15]
-    FTSort = pd.DataFrame.head(FTFilter, 100)
-    print(FTSort)
 
-def TRB_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    TRBall = pd.DataFrame(playerStats.sort_values('TRB',ascending=False,ignore_index=True))
-    TRBFilter = TRBall[TRBall['MP'] > 15]
-    TRBSort = pd.DataFrame.head(TRBFilter, 100)
-    print(TRBSort)
+def Player_sort():
+    Playerall = pd.DataFrame(playerStats.sort_values('Player',ascending=True))
+    PlayerFilter = Playerall[Playerall['MP'] > 15].reset_index(drop=True)
+    print(PlayerFilter)
+    loop_Menu()
 
-def AST_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    Astall = pd.DataFrame(playerStats.sort_values('AST',ascending=False,ignore_index=True))
-    AstFilter = Astall[Astall['MP'] > 15]
-    AstSort = pd.DataFrame.head(AstFilter, 100)
-    print(AstSort)
-    
-def STL_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    STLall = pd.DataFrame(playerStats.sort_values('STL',ascending=False,ignore_index=True))
-    STLFilter = STLall[STLall['MP'] > 15]
-    STLSort = pd.DataFrame.head(STLFilter, 100)
-    print(STLSort)
 
-def BLK_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    BLKall = pd.DataFrame(playerStats.sort_values('BLK',ascending=False,ignore_index=True))
-    BLKFilter = BLKall[BLKall['MP'] > 15]
-    BLKSort = pd.DataFrame.head(BLKFilter, 100)
-    print(BLKSort)
-
-def TOV_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    TOVall = pd.DataFrame(playerStats.sort_values('TOV',ascending=False,ignore_index=True))
-    TOVFilter = TOVall[TOVall['MP'] > 15]
-    TOVSort = pd.DataFrame.head(TOVFilter, 100)
-    print(TOVSort)
-
-def PTS_sort():
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.latex.longtable', True)
-    PTSall = pd.DataFrame(playerStats.sort_values('PTS',ascending=False,ignore_index=True))
-    PTSFilter = PTSall[PTSall['MP'] > 15]
-    PTSSort = pd.DataFrame.head(PTSFilter, 100)
-    print(PTSSort)
+def name_sort(sort_column):
+    nameall = pd.DataFrame(playerStats.sort_values(sort_column,ascending=False,ignore_index=True))
+    namefilter = nameall[nameall['MP'] > 15].reset_index(drop=True)
+    namesort = namefilter.head(100)
+    print(namesort)
+    loop_Menu()
 
     
 def main_Menu():
-    print("Welcome to The NBA Draft Manager!") 
-    print("Please select an option from below to access our data:")
-    print("----------------------------------")
-    print("1: View All Players")
-    print("2: View A Specific Teams Players")
-    print("3: View All Players Sorted by Category")
-    print("4: Search for Player by Last Name")
-    print("5: Search for Player Position")
-    print("6: Exit")
-    main_Menu.Selection = input("Choose a number from above: ")
-    if main_Menu.Selection == '1':
-        NBAPlayer_sort()
-    elif main_Menu.Selection == '2':
-        Team_sort()
-    elif main_Menu.Selection == '3':
-        searchCategory_Menu()
-    elif main_Menu.Selection == '4':
-        NBAPlayer_sort()
-    elif main_Menu.Selection == '5':
-        NBAPlayer_sort()
-    elif main_Menu.Selection == '6':
-        sys.exit("Thank you for choosing NBA Player Selector")
+        print('------------------------------------------------------')
+        print("Welcome to The NBA Draft Manager!") 
+        print("Please select an option from below to access our data:")
+        print("------------------------------------------------------")
+        print("1: View All Players")
+        #print("2: View A Specific Teams Players")
+        print("2: View All Players Sorted by Category")
+        print("3: Exit")
+        print('------------------------------------------------------')
+        main_Menu.Selection = input("Choose a number from above: ")
+        print('------------------------------------------------------')
+        if main_Menu.Selection == '1':
+            Player_sort()
+        #elif main_Menu.Selection == '2':
+        #    team_sort()
+        elif main_Menu.Selection == '2':
+            searchCategory_Menu()
+        elif main_Menu.Selection == '3':
+            print('------------------------------------------------------')
+            sys.exit("Thank you for choosing the NBA Manager!")
+            print('------------------------------------------------------')
+        else:
+           print("")
+           print("Please Try Again")
+           print("")
+           print("")
+           main_Menu()
 
 
-
-def allPlayer_Menu():
-    print("Please select an option below to continue:")
-    print("1: Search for Specific Teams Players")
-    print("2: Sort by Category")
-    print("3: Search Player by Last Name")
-    print("4: Return to Main Menu")
-    input()
 
 def searchCategory_Menu():
     print("What Category would you like to Sort By?")
@@ -153,45 +91,89 @@ def searchCategory_Menu():
     print("8. Turnovers")
     print("9. Points")
     print("10. Main Menu")
+    print('------------------------------------------------------')
     searchCategory_Menu.Selection = input("Choose a number from above: ")
+    print('------------------------------------------------------')
     if searchCategory_Menu.Selection == '1':
-            FGpct_sort()
+            name_sort(neededCol_List[4])
     elif searchCategory_Menu.Selection == '2':
-            ThreePointer_sort()
+            name_sort(neededCol_List[5])
     elif searchCategory_Menu.Selection == '3':
-            FTpct_sortt()
+            name_sort(neededCol_List[6])
     elif searchCategory_Menu.Selection == '4':
-            TRB_sort()
+            name_sort(neededCol_List[7])
     elif searchCategory_Menu.Selection == '5':
-            AST_sort()
+            name_sort(neededCol_List[8])
     elif searchCategory_Menu.Selection == '6':
-            STL_sort()
+            name_sort(neededCol_List[9])
     elif searchCategory_Menu.Selection == '7':
-            BLK_sort()
+            name_sort(neededCol_List[10])
     elif searchCategory_Menu.Selection == '8':
-            TOV_sort()
+            name_sort(neededCol_List[11])
     elif searchCategory_Menu.Selection == '9':
-            PTS_sort()
+            name_sort(neededCol_List[12])
     elif searchCategory_Menu.Selection == '10':
-            main_Menu()
+            main_Menu()  
 
-def searchTeam_Menu():
-    print("Please Choose the team abbreviations from the list below:")
-    nba_TeamSearch()
-    input()
-
-
-#print(playerStats.drop_duplicates["Tm"])
-
-
-#ThreePointer()
-#FTpct()
-#TRB()
 
 main_Menu()
-#allPlayer_Menu()
-#searchCategory_Menu()
-#searchTeam_Menu()
-#FGpct()
 
-#print(playerStats)
+
+
+
+#main_Menu()
+
+#Extra Features for TeamSearch to come later:
+#def NBAteamplayer_sort(team_sorted):
+    #nameall = pd.DataFrame(playerStats.sort_values('Player',ascending=False,ignore_index=True))
+    #namefilter = nameall[nameall['Tm'] == team_sorted].reset_index(drop=True)
+    #namesort = namefilter.head(100)
+    #print(namesort)
+    #loop_Menu()
+#def searchTeam_Menu():
+   # print("Please Choose the team abbreviations from the list below:")
+   # team_sort()
+    #input()
+#def team_players(team):
+ #   teamPlayers = pd.DataFrame(playerStats.sort_values('Player', ascending=False))
+  #  teamPlayerFilter = teamPlayers[teamPlayers['Tm'] == team]
+   # print(teamPlayerFilter)
+#def team_sort():
+ #   nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
+  #  player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
+   # print(player_Team.sort_values('Tm',ascending=True,).reset_index(drop=True))
+    #nbaplayer_Team()
+
+#def team_sort():
+    #nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
+    #player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
+    #print(player_Team.sort_values('Tm',ascending=True,).reset_index(drop=True))
+    #nbaplayer_Team()
+
+#def nbaplayer_Team():
+#    nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
+#    player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
+#    team = input("Please select a team abbreviation from above. Select 10 for Main Menu or 11 to Exit the Program: ")
+#    if team == '11':
+#        print("Thank you for Choosing NBA Player Selector, Have a nice day")
+#        main_Menu.loop = False
+#    elif team == '10':
+#        main_Menu()
+#    elif team not in player_Team:
+#        print("Invalid selection please try again")
+#        NBAteamplayer_sort()
+#    else:
+#        NBAteamplayer_sort(team)
+#Methods below for Sort mechanics
+#def team_sort():
+ #   nba_Team = pd.DataFrame(playerStats, columns = ['Tm'])
+  #  player_Team = pd.DataFrame.drop_duplicates(nba_Team,keep="first")
+   # print(player_Team.sort_values('Tm',ascending=True,).reset_index(drop=True))
+    #team = input("Which Team would you like to view players for? Please choose an abbreviation above. Select 10 if you would like to return to the main menu or 11 to exit the program.")
+    #return team
+    #if team == '11':
+    #   sys.exit("Thank you for Choosing NBA Player Selector, Have a nice day")
+    #elif team == '10':
+    #    main_Menu()
+    #team_players(team)
+#print(playerStats.drop_duplicates["Tm"])
